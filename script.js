@@ -1,14 +1,53 @@
+// _________________ error __________ 
+document.getElementById('error-message').style.display = 'none';
+document.getElementById('spinner').style.display = 'none';
+
+
+
+
+
+
 const searchDrinks=()=>{
                const searchfield=document.getElementById('search-feild')
                const searchText=searchfield.value;
                //console.log(searchText);
                searchfield.value="";
-               const url=`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchText}`
+// ___error __________ 
+if (searchText == '') {
+    // please write something to display
+    displayError();
+}
+else {
+    // Display Spinner
+    document.getElementById('spinner').style.display = 'block';
+    // Hide error
+    document.getElementById('error-message').style.display = 'none';
+    // Clear Team Details
+    document.getElementById('drink-details').textContent = '';
+    // Clear Search Result
+    document.getElementById('search-result').textContent ='';
+    // load data
+    const url=`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchText}`
 //console.log(url)
 
 fetch(url)
 .then(res=>res.json())
 .then(data=>displayDrinksResult(data.drinks));
+}
+const displayError = () => {
+    document.getElementById('error-message').style.display = 'block';
+    document.getElementById('spinner').style.display = 'none';
+    // document.getElementById('team-numbers').textContent = '';
+    document.getElementById('drink-details').textContent = '';
+
+}
+
+//                const url=`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchText}`
+// //console.log(url)
+
+// fetch(url)
+// .then(res=>res.json())
+// .then(data=>displayDrinksResult(data.drinks));
 
 }
 
@@ -46,6 +85,7 @@ fetch(url)
 const displayDrinksDItails= drink=>{
 console.log(drink);
 const drinkDitails=document.getElementById('drink-details');
+drinkDitails.textContent="";
 const div = document.createElement('div');
 div.classList.add('card');
 div.innerHTML=`
